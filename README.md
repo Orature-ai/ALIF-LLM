@@ -1,4 +1,4 @@
-# Academic Project Page Template
+# ALIF: Urdu Pretrained Generative Model
 This is an academic paper project page template.
 
 
