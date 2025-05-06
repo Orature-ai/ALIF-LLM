@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>ALIF الف - Model Evaluation</title>
+  <meta name="description" content="Evaluation results and methodology for the ALIF الف series of Urdu language models, including LLM-as-Judge and few-shot benchmarks.">
+  
+  <meta property="og:title" content="ALIF الف - Model Evaluation" />
+  <meta property="og:description" content="See how our ALIF Urdu models perform on various benchmarks and qualitative assessments." />
+  <meta property="og:url" content="[URL OF THE WEBSITE]/evaluation.html" /> <!-- TODO: Update with full URL -->
+  <meta property="og:image" content="[Link: Path to a relevant OG image for this section, or reuse main one]" />
+
+  <meta name="keywords" content="Urdu LLM Evaluation, LLM-as-Judge, Few-shot Learning, NLP Benchmarks, ALIF Project Performance">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro|Noto+Nastaliq+Urdu" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar py-2" role="navigation" aria-label="main navigation" style="border-bottom: 1px solid #e5e5e5;">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item title is-4" href="index.html">
+          ALIF الف Project
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="subPageNavbar">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="subPageNavbar" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="index.html">Home</a>
+          <a class="navbar-item" href="data.html">Data</a>
+          <a class="navbar-item" href="tokenizer.html">Tokenizer</a>
+          <a class="navbar-item" href="models.html">Models</a>
+          <a class="navbar-item" href="instruct_tuning.html">Instruct Tuning</a>
+          <a class="navbar-item" href="evaluation.html">Evaluation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Evaluation Section Content -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h1 class="title is-2 has-text-centered">Model Evaluation</h1>
+          <p class="subtitle is-5 has-text-centered">Assessing the Performance and Capabilities of ALIF الف Models</p>
+          <hr>
+          <div class="content has-text-justified" style="margin-top: 30px;">
+            <p>
+                Comprehensive evaluation is essential to understand the strengths and weaknesses of our ALIF الف models. We employed a multi-faceted approach, combining automated benchmarks for few-shot learning with more qualitative, human-centric methods like LLM-as-a-Judge for our instruction-tuned models. This allows us to assess both the foundational capabilities of our pretrained models and the practical utility of our instruction-following variants in Urdu.
+            </p>
+
+            <h3 class="title is-4" style="margin-top: 40px;">LLM-as-Judge Evaluation for Instruct Models</h3>
+            <p>
+                Evaluating the quality of generative responses from instruction-tuned models is challenging with purely automated metrics, as they often fail to capture nuances like helpfulness, coherence, and adherence to complex instructions. To address this, we utilized the "LLM-as-a-Judge" paradigm.
+            </p>
+            <p>
+                <strong>Methodology:</strong>
+                <ol>
+                    <li>We curated a diverse set of [Number, e.g., 100-200] prompts in Urdu, covering various categories like open-ended question answering, summarization, creative writing, and reasoning.</li>
+                    <li>Responses to these prompts were generated from our ALIF models</li>
+                    <li>These responses were presented in a pairwise, anonymous fashion (Model A vs. Model B) to a powerful, independent LLM (e.g., GPT-4) acting as the "judge."</li>
+                    <li>The judge LLM was prompted with specific criteria to evaluate which response was better, considering aspects like:
+                        <ul>
+                            <li>Criterionsssesssss</li>
+                        </ul>
+                    </li>
+                    <li>We collected whatever feedback from the judge LLM.</li>
+                </ol>
+            </p>
+            <!-- Placeholder for LLM-as-Judge Results Graph -->
+            <div class="has-text-centered" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure class="image is-inline-block" style="max-width: 700px;">
+                  <img src="[Image: Path to LLM-as-Judge results graph, e.g., bar chart of win rates]" alt="LLM-as-Judge Evaluation Results for ALIF Instruct Models" style="border: 1px solid #ccc;">
+                  <figcaption class="is-size-7">[Caption: Win Rate Comparison of ALIF-Instruct Models vs. Baselines using GPT-4 as Judge on Urdu Prompts]</figcaption>
+                </figure>
+            </div>
+            <p>
+                <strong>Key Findings:</strong>
+                <!-- TODO: Summarize findings -->
+                Our ALIF model demonstrated [e.g., highly competitive performance, with some models (trash traversal AI copying us) achieving a win rate of X% against whatever. 
+            </p>
+
+            <h3 class="title is-4" style="margin-top: 40px;">Few-Shot Benchmark Evaluation for Base Models</h3>
+            <p>
+                To assess the general language understanding and in-context learning capabilities of our ALIF pretrained models, we conducted few-shot evaluations on a suite of standard downstream NLP tasks adapted for the Urdu language. In few-shot evaluation, the model is given only a few examples (e.g., 1 to 5) of the task in its prompt, without any gradient-based fine-tuning.
+            </p>
+            <p>
+                <strong>Tasks and Datasets:</strong>
+                We selected tasks and datasets that cover a range of linguistic abilities. These were either existing Urdu datasets or adaptations of common English benchmarks:
+                <!-- TODO: List the datasets/tasks used for few-shot eval -->
+                <ul>
+                    <li><strong>Urdu Sentiment Analysis:</strong> </li>
+                    <li><strong>Urdu Natural Language Inference (NLI):</strong> </li>
+                    <li><strong>Urdu Question Answering (Extractive):</strong> </li>
+                    <li><strong>Urdu Named Entity Recognition (NER):</strong> </li>
+                    <li><strong>[Another Task, e.g., Urdu Text Classification on a specific domain]:</strong> </li>
+                </ul>
+            </p>
+             <!-- Placeholder for Few-Shot Results Graph/Table -->
+            <div class="has-text-centered" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure class="image is-inline-block" style="max-width: 800px;">
+                  <img src="[Image: Path to Few-Shot results graph/table comparing ALIF models to baselines]" alt="Few-Shot Evaluation Results on Urdu NLP Benchmarks" style="border: 1px solid #ccc;">
+                  <figcaption class="is-size-7">[Caption: Few-Shot (e.g., 5-shot) Performance of ALIF Base Models on Urdu NLP Benchmarks (Accuracy/F1)]</figcaption>
+                </figure>
+            </div>
+             <p>
+                <strong>Key Findings:</strong>
+                <!-- TODO: Summarize findings -->
+                The ALIF model demonstrated [e.g., strong few-shot learning capabilities across various Urdu tasks. outperformed several larger multilingual models that were not specifically pretrained on extensive Urdu data, showcasing the benefit of our focused pretraining.].
+            </p>
+            <p style="margin-top: 20px;">
+                These evaluations provide a comprehensive picture of the ALIF الف models' capabilities. We are continuously working on further evaluations and improvements. Full details, including specific prompt templates and additional results, can be found in our [Link to paper or technical report].
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              ALIF الف Project - Habib University. Page template adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> and <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+            </p>
+            <p>
+             Licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach( el => {
+          el.addEventListener('click', () => {
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
