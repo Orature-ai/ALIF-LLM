@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>ALIF الف - Model Series Details</title>
+  <meta name="description" content="Specifications and details of the ALIF الف series of Urdu pretrained and instruction-tuned language models.">
+  
+  <meta property="og:title" content="ALIF الف - Model Series" />
+  <meta property="og:description" content="Explore our range of Urdu SLMs, from base pretrained models to instruction-following variants." />
+  <meta property="og:url" content="[URL OF THE WEBSITE]/models.html" /> <!-- TODO: Update with full URL -->
+  <meta property="og:image" content="[Link: Path to a relevant OG image for this section, or reuse main one]" />
+
+  <meta name="keywords" content="Urdu Language Models, SLM, Pretrained Models, Instruct Models, ALIF Project, AI Models">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro|Noto+Nastaliq+Urdu" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar py-2" role="navigation" aria-label="main navigation" style="border-bottom: 1px solid #e5e5e5;">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item title is-4" href="index.html">
+          ALIF الف Project
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="subPageNavbar">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="subPageNavbar" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="index.html">Home</a>
+          <a class="navbar-item" href="data.html">Data</a>
+          <a class="navbar-item" href="tokenizer.html">Tokenizer</a>
+          <a class="navbar-item" href="models.html">Models</a>
+          <a class="navbar-item" href="instruct_tuning.html">Instruct Tuning</a>
+          <a class="navbar-item" href="evaluation.html">Evaluation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Models Section Content -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h1 class="title is-2 has-text-centered">The ALIF الف Model Series</h1>
+          <p class="subtitle is-5 has-text-centered">A Family of Urdu Generative Models for Diverse Applications</p>
+          <hr>
+          <div class="content has-text-justified" style="margin-top: 30px;">
+            <p>
+                We have developed a series of generative language models, collectively named ALIF الف, specifically pretrained on our large-scale ALIF-Urdu-Corpus. Our primary focus has been on creating computationally efficient Small Language Models (SLMs) that offer a strong balance between performance and the resources required for training and deployment. The series includes both base pretrained models and instruction-tuned variants.
+            </p>
+            <p>
+                All models are built upon a standard architecture like blah blah blah. They utilize our custom ALIF-Urdu-32k tokenizer for optimal Urdu language processing.
+            </p>
+
+            <!-- Placeholder for Model Architecture Diagram (Optional, if you have a general one) -->
+            <!-- <div class="has-text-centered" style="margin-top:30px; margin-bottom:30px;">
+                <figure class="image is-inline-block" style="max-width: 700px;">
+                  <img src="[Image: Path to model architecture diagram]" alt="ALIF Model Architecture">
+                  <figcaption class="is-size-7 has-text-centered">[Caption for the model architecture diagram, e.g., "Core Transformer Decoder Block used in ALIF models"]</figcaption>
+                </figure>
+            </div> -->
+
+            <h3 class="title is-4" style="margin-top: 40px;">Model Specifications</h3>
+            <p>Below is an overview of the models in the ALIF الف series. "Pretrained" models are foundational models trained on raw text, while "Instruct-Tuned" models are further fine-tuned on instruction datasets to follow commands and engage in dialogue.</p>
+            
+            <div class="table-container" style="margin-top: 20px;">
+                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Model Name</th>
+                            <th>Parameters</th>
+                            <th>Base Architecture</th>
+                            <th>Training Data</th>
+                            <th>Tokenizer</th>
+                            <th>Type</th>
+                            <th>Key Features / Purpose</th>
+                            <!-- <th>HF Link</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ALIF-100M</td>
+                            <td>~100 Million</td>
+                            <td>[e.g., GPT]</td>
+                            <td>ALIF-Urdu-Corpus (Full)</td>
+                            <td>ALIF-Urdu-32k</td>
+                            <td>Pretrained</td>
+                            <td>Smallest model for research, quick experimentation, and very low-resource deployment.</td>
+                            <!-- <td><a href="[Link: HF ALIF-Base-70M]" target="_blank">Access</a></td> -->
+                        </tr>
+                        <!-- Add more rows as needed for other models -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- <p class="is-size-7 has-text-centered" style="margin-top: 5px;">(Hugging Face links will be active upon model release.)</p> -->
+
+            <h3 class="title is-4" style="margin-top: 40px;">Training Details</h3>
+            <p>
+                <!-- TODO: Provide some general training details -->
+                All base models were pretrained using a standard causal language modeling objective on the ALIF-Urdu-Corpus. Training was performed on [Specify hardware, e.g., A100 GPUs] using [Specify framework, e.g., PyTorch]. Key hyperparameters included [e.g., learning rate schedule, batch size, sequence length, optimizer details].
+                Further details on the instruction tuning process can be found on the <a href="instruct_tuning.html">Instruction Tuning page</a>.
+            </p>
+
+            <div class="has-text-centered" style="margin-top: 40px;">
+              <a href="[Link: Hugging Face Organization page for ALIF models]" target="_blank"
+                  class="button is-success is-large is-rounded">
+                  <span class="icon">
+                    <i class="fas fa-robot"></i>
+                  </span>
+                  <span>View All ALIF Models on Hugging Face</span>
+               </a>
+               <a href="[Link: Chat interface for ALIF models]" target="_blank"
+                  class="button is-info is-large is-rounded">
+                  <span class="icon">
+                    <i class="fas fa-comments"></i>
+                  </span>
+                  <span>Try ALIF Models in Chat Interface</span>
+               </a>
+            </div>
+            <!-- <div class="has-text-centered" style="margin-top: 20px;">
+              <a href="[Link: Chat interface for ALIF models]" target="_blank"
+                  class="button is-info is-large is-rounded">
+                  <span class="icon">
+                    <i class="fas fa-comments"></i>
+                  </span>
+                  <span>Try ALIF Models in Chat Interface</span>
+               </a>
+            </div> -->
+             
+             <p class="is-size-7 has-text-centered" style="margin-top: 10px;">(Link will be active upon public release of models.)</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Models Section Content -->
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              ALIF الف Project - Habib University. Page template adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> and <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+            </p>
+            <p>
+             Licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach( el => {
+          el.addEventListener('click', () => {
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
