@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- Update title and description for this specific page -->
+  <title>ALIF الف - Data Curation Details</title>
+  <meta name="description" content="Detailed information on the data curation process for the ALIF الف Urdu Language Model project.">
+  
+  <!-- Common meta tags (can be simplified or reused from index.html if preferred) -->
+  <meta property="og:title" content="ALIF الف - Data Curation" />
+  <meta property="og:description" content="Learn about the dataset creation for our Urdu SLMs." />
+  <meta property="og:url" content="[URL OF THE WEBSITE]/data.html" /> <!-- TODO: Update with full URL -->
+  <meta property="og:image" content="[Link: Path to a relevant OG image for this section, or reuse main one]" />
+
+  <meta name="keywords" content="Urdu Dataset, Data Curation, NLP Data, ALIF Project, Urdu Corpus">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro|Noto+Nastaliq+Urdu" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <!-- No need for carousel/slider CSS unless you use them on this page -->
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <!-- No need for carousel/slider JS unless you use them on this page -->
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <!-- Simple Navigation Bar for Sub-pages -->
+  <nav class="navbar py-2" role="navigation" aria-label="main navigation" style="border-bottom: 1px solid #e5e5e5;">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item title is-4" href="index.html">
+          ALIF الف Project
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="subPageNavbar">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="subPageNavbar" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="index.html">Home</a>
+          <a class="navbar-item" href="data.html">Data</a>
+          <a class="navbar-item" href="tokenizer.html">Tokenizer</a>
+          <a class="navbar-item" href="models.html">Models</a>
+          <a class="navbar-item" href="instruct_tuning.html">Instruct Tuning</a>
+          <a class="navbar-item" href="evaluation.html">Evaluation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- End Simple Navigation Bar -->
+
+  <!-- Data Section Content -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h1 class="title is-2 has-text-centered">Data Curation: The Foundation of ALIF</h1>
+          <p class="subtitle is-5 has-text-centered">Building a Comprehensive Urdu Corpus</p>
+          <hr>
+          <div class="content has-text-justified" style="margin-top: 30px;">
+            <p>
+              High-quality, large-scale data is crucial for building effective language models. Recognizing the scarcity of comprehensive Urdu datasets suitable for pretraining, we undertook a significant data curation effort. This involved scraping diverse sources, implementing a robust cleaning and deduplication pipeline, and ensuring cultural relevance.
+              <!-- TODO: Expand on the novelty and significance of the dataset -->
+              Our goal was to create a corpus that not only captures the breadth of the Urdu language but also its nuances, making it an ideal foundation for training our ALIF الف models.
+            </p>
+            
+            <h3 class="title is-4" style="margin-top: 40px;">Our Data Collection & Cleaning Pipeline</h3>
+            <p>
+              The process of curating the ALIF-Urdu-Corpus involved several meticulous stages designed to maximize quality and diversity:
+              <!-- TODO: Describe the pipeline steps: scraping sources, cleaning methods (normalization, filtering), deduplication techniques -->
+              <ol>
+                  <li><strong>Source Identification and Scraping:</strong><!-- ADD STUFF HERE AND IN OTHER BLOCKS -->></li>
+                  <li><strong>Initial Filtering & Preprocessing:</strong> </li>
+                  <li><strong>Content Cleaning:</strong> </li>
+                  <li><strong>Deduplication:</strong> </li>
+                  <li><strong>Quality Control & Curation:</strong> </li>
+              </ol>
+            </p>
+            <!-- Placeholder for pipeline diagram -->
+            <div class="has-text-centered" style="margin-top: 30px; margin-bottom: 30px;">
+              <figure class="image is-inline-block" style="max-width: 800px;">
+                <img src="[Image: Path to data pipeline diagram]" alt="Data Curation Pipeline Diagram">
+                <figcaption class="is-size-7 has-text-centered">[Caption for the pipeline diagram: Overview of the ALIF Data Curation Process]</figcaption>
+              </figure>
+            </div>
+
+            <h3 class="title is-4" style="margin-top: 40px;">The ALIF-Urdu-Corpus Overview</h3>
+            <p>
+              The resulting dataset, named the <strong>"[Dataset Name, e.g., ALIF-Urdu-Corpus-V1]"</strong>, is a significant contribution to Urdu NLP resources.
+              <!-- TODO: Provide details on data distribution (sources, genres), size, token count. -->
+              Key statistics:
+              <ul>
+                  <li><strong>Total Size:</strong> [Size] GB of raw text.</li>
+                  <li><strong>Total Documents:</strong> [Number] documents.</li>
+                  <li><strong>Total Words (approx.):</strong> [Number] words.</li>
+                  <li><strong>Total Tokens (using our 32k tokenizer):</strong> [Number] tokens.</li>
+                  <li><strong>Sources:</strong> [e.g., News (40%), Literature (25%), Web Crawl (20%), Social Media (15%)]</li>
+              </ul>
+            </p>
+             <!-- Placeholder for data distribution chart -->
+             <div class="has-text-centered" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure class="image is-inline-block" style="max-width: 600px;">
+                    <img src="[Image: Path to data distribution chart (e.g., pie chart of sources)]" alt="Dataset Source Distribution">
+                    <figcaption class="is-size-7 has-text-centered">[Caption for the distribution chart: Breakdown of text sources in the ALIF-Urdu-Corpus]</figcaption>
+                </figure>
+             </div>
+             <h4 class="title is-5">Dataset Sample</h4>
+             <p>Below is a small, anonymized sample snippet from our corpus to illustrate the type of text included:</p>
+             <!-- Placeholder for dataset screenshot/sample -->
+             <div class="has-text-centered" style="margin-top: 20px; margin-bottom: 30px; padding: 15px; border: 1px solid #dbdbdb; background-color: #f9f9f9; border-radius: 4px;">
+                <p style="font-family: 'Noto Nastaliq Urdu', serif; direction: rtl; text-align: right; font-size: 1.1em;">
+                    [Placeholder: Insert a short, clean, and representative sample of Urdu text from your dataset here. For example:
+                    جدید دور میں اردو زبان کو کئی چیلنجز کا سامنا ہے۔ ٹیکنالوجی کی ترقی کے ساتھ ساتھ، ضروری ہے کہ ہم اپنی زبان کو بھی ڈیجیٹل دنیا میں مضبوط بنائیں۔ اسی مقصد کے تحت الف پروجیکٹ کا آغاز کیا گیا تاکہ اردو کے لیے معیاری لسانی وسائل تیار کیے جا سکیں۔]
+                </p>
+                <p class="is-size-7 has-text-centered" style="margin-top:10px;">[Caption for the dataset sample: An illustrative snippet from the ALIF-Urdu-Corpus.]</p>
+             </div>
+            <p>
+              This corpus represents one of the first large-scale, meticulously cleaned, and publicly available Urdu corpora specifically designed and optimized for pretraining generative language models. We believe it will be a valuable resource for the wider research community.
+            </p>
+            <!-- <div class="has-text-centered" style="margin-top:30px;">
+              <a href="[Link: Hugging Face Dataset]" target="_blank"
+                  class="button is-primary is-large is-rounded">
+                  <span class="icon">
+                    <i class="fas fa-download"></i>
+                  </span>
+                  <span>Access Dataset on Hugging Face</span>
+               </a>
+            </div>
+            <p class="has-text-centered" style="margin-top: 10px;">
+                (Link will be active upon public release)
+            </p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Data Section Content -->
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              ALIF الف Project - Habib University. Page template adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> and <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+            </p>
+            <p>
+             Licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach( el => {
+          el.addEventListener('click', () => {
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
