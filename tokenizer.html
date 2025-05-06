@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>ALIF الف - Tokenization Details</title>
+  <meta name="description" content="Detailed information on the tokenization strategies and evaluations for the ALIF الف Urdu Language Model project.">
+  
+  <meta property="og:title" content="ALIF الف - Tokenization" />
+  <meta property="og:description" content="Learn about our custom Urdu tokenizers and their performance." />
+  <meta property="og:url" content="[URL OF THE WEBSITE]/tokenizer.html" /> <!-- TODO: Update with full URL -->
+  <meta property="og:image" content="[Link: Path to a relevant OG image for this section, or reuse main one]" />
+
+  <meta name="keywords" content="Urdu Tokenizer, BPE, Unigram, Tokenization Evaluation, ALIF Project, NLP">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro|Noto+Nastaliq+Urdu" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar py-2" role="navigation" aria-label="main navigation" style="border-bottom: 1px solid #e5e5e5;">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item title is-4" href="index.html">
+          ALIF الف Project
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="subPageNavbar">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="subPageNavbar" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="index.html">Home</a>
+          <a class="navbar-item" href="data.html">Data</a>
+          <a class="navbar-item" href="tokenizer.html">Tokenizer</a>
+          <a class="navbar-item" href="models.html">Models</a>
+          <a class="navbar-item" href="instruct_tuning.html">Instruct Tuning</a>
+          <a class="navbar-item" href="evaluation.html">Evaluation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Tokenizer Section Content -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h1 class="title is-2 has-text-centered">Tokenization: Tailoring to Urdu</h1>
+          <p class="subtitle is-5 has-text-centered">Developing Efficient Tokenizers for a Morphologically Rich Language</p>
+          <hr>
+          <div class="content has-text-justified" style="margin-top: 30px;">
+            <p>
+              Effective tokenization is vital for model performance and efficiency, especially for morphologically rich languages like Urdu where words can have many forms. Generic multilingual tokenizers often struggle with Urdu's nuances, leading to suboptimal segmentation and larger sequence lengths. To address this, we developed and evaluated multiple tokenizers trained specifically on our curated ALIF-Urdu-Corpus.
+            </p>
+
+            <h3 class="title is-4" style="margin-top: 40px;">Our Custom Tokenizers</h3>
+            <p>We focused on two primary tokenizers designed to balance Urdu-specific needs and potential bilingual applications:</p>
+
+            <div class="box" style="margin-top: 20px;">
+                <h4 class="title is-5">1. Urdu Native Tokenizer (ALIF-Urdu-32k)</h4>
+                <ul>
+                    <li><strong>Algorithm:</strong> <!-- ADD STUFF HERE AND NEECHAY -->></li>
+                    <li><strong>Training Data:</strong> </li>
+                    <li><strong>Vocabulary Size:</strong></li>
+                    <li><strong>Methodology:</strong> <!-- [Briefly describe training process, e.g., "Trained using the Hugging Face `tokenizers` library with parameters optimized for Urdu script, including pre-tokenization rules for Urdu characters and numerals." Mention any special handling for ligatures or specific Urdu characters.] -->></li>
+                    <li><strong>Key Characteristics:</strong><!--  Optimized for pure Urdu text, aiming for efficient representation and good handling of common Urdu morphological variations. Designed to minimize out-of-vocabulary tokens for native Urdu content. -->></li>
+                </ul>
+            </div>
+
+            <div class="box" style="margin-top: 20px;">
+                <h4 class="title is-5">2. Urdu-English Bilingual Tokenizer (ALIF-UrEn-64k) (Optional)</h4>
+                 <!-- TODO: Include this section if you developed a bilingual tokenizer -->
+                <p class="is-italic">[Remove or complete this section if applicable]</p>
+                <ul>
+                    <li><strong>Algorithm:</strong> </li>
+                    <li><strong>Training Data:</strong> </li>
+                    <li><strong>Vocabulary Size:</strong> </li>
+                    <li><strong>Methodology:</strong> </li>
+                    <li><strong>Key Characteristics:</strong><!--  Aims to handle both Urdu and English text effectively, suitable for scenarios involving code-mixing or if the models are intended for bilingual inputs/outputs. -->></li>
+                </ul>
+            </div>
+
+            <h3 class="title is-4" style="margin-top: 40px;">Tokenizer Evaluation & Comparison</h3>
+            <p>
+              We rigorously evaluated our custom tokenizers in two stages, first, against each other to determine the best-performing tokenizer for Urdu, and second, against existing tokenizer - mainly GPT4's o200k_base tokenizer as that provided the best tokenizations as per testing on the tiktoken.vercel app:
+            </p>
+            <ul>
+                <li><strong>Average Tokens per Document (Fertility):</strong> Measures how many tokens are produced for a given amount of text. Lower values generally indicate better compression and efficiency.</li>
+                <li><strong>Vocabulary Overlap/Coverage on Urdu Text:</strong> How well the tokenizer's vocabulary covers common Urdu words and subwords.</li>
+                <li><strong>Tokenization Speed:</strong> The time taken to tokenize a standard corpus.</li>
+            </ul>
+
+            <p style="margin-top: 15px;">
+                Yahan kuch daalna hai
+                <!-- Our ALIF-Urdu-32k tokenizer demonstrated [e.g., approximately X% fewer tokens per document on average compared to Llama's tokenizer on our Urdu test set, while maintaining competitive tokenization speed]. We also found that [e.g., our 32k vocabulary offered a good trade-off between compression and vocabulary size compared to our experimental 10k and 20k versions]. -->
+            </p>
+
+            <!-- Placeholder for Tokenizer Comparison Graphs -->
+            <div class="columns is-centered" style="margin-top: 30px;">
+                 <div class="column is-half has-text-centered">
+                     <figure class="image is-inline-block">
+                        <img src="[Image: Path to fertility comparison graph for 32k vs others]" alt="Tokenizer Fertility Comparison (ALIF-Urdu-32k)" style="border: 1px solid #ccc;">
+                        <figcaption class="is-size-7">[Caption: Average Tokens per Document: ALIF-Urdu-32k vs. Baselines]</figcaption>
+                     </figure>
+                 </div>
+                 <div class="column is-half has-text-centered">
+                    <figure class="image is-inline-block">
+                        <img src="[Image: Path to speed comparison graph or another relevant metric]" alt="Tokenizer Performance Metric" style="border: 1px solid #ccc;">
+                        <figcaption class="is-size-7">[Caption: Tokenization Speed (or other metric) Comparison]</figcaption>
+                    </figure>
+                 </div>
+            </div>
+            <p class="has-text-justified" style="margin-top: 15px;">
+                [If applicable, add details about the Ur-En tokenizer comparison, e.g., "The ALIF-UrEn tokenizer(s) showed comparable performance to tokenizers like o200k_base on bilingual text, with slightly better Urdu tokenization."].
+            </p>
+
+            <h3 class="title is-4" style="margin-top: 40px;">Try Our Tokenizer!</h3>
+            <p>
+                Experience how our ALIF-Urdu-32k tokenizer processes Urdu text. You can test it live:
+            </p>
+            <div class="has-text-centered" style="margin-top: 30px; margin-bottom: 30px;">
+                <!-- Option 1: Link to a Hugging Face Space or similar -->
+                 <a href="[Link: Live Tokenizer Demo on Hugging Face Spaces or similar]" target="_blank" class="button is-primary is-large is-rounded">
+                    <span class="icon"><i class="fas fa-magic"></i></span>
+                    <span>Test ALIF Tokenizer Online</span>
+                </a>
+                 <br><br>
+                <!-- Option 2: QR Code linking to the demo -->
+                <!-- <figure class="image is-128x128 is-inline-block">
+                    <img src="[Image: Path to QR Code for Tokenizer Demo]" alt="QR Code for Live Tokenizer Demo">
+                </figure>
+                <p class="caption">[Caption: Scan for live tokenizer demo]</p> -->
+                 <!-- <p class="is-size-7 has-text-centered">(Link/QR code will be active upon deployment of the demo.)</p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              ALIF الف Project - Habib University. Page template adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> and <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+            </p>
+            <p>
+             Licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach( el => {
+          el.addEventListener('click', () => {
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
