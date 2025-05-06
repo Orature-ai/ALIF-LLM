@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>ALIF الف - Instruction Tuning Details</title>
+  <meta name="description" content="Details on the instruction tuning process, datasets, and prompt formats used for ALIF الف Urdu language models.">
+  
+  <meta property="og:title" content="ALIF الف - Instruction Tuning" />
+  <meta property="og:description" content="Learn how we fine-tuned ALIF models to follow instructions in Urdu." />
+  <meta property="og:url" content="[URL OF THE WEBSITE]/instruct_tuning.html" /> <!-- TODO: Update with full URL -->
+  <meta property="og:image" content="[Link: Path to a relevant OG image for this section, or reuse main one]" />
+
+  <meta name="keywords" content="Instruction Tuning, Urdu LLM, Fine-tuning, Prompt Engineering, ALIF Project, SFT">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro|Noto+Nastaliq+Urdu" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar py-2" role="navigation" aria-label="main navigation" style="border-bottom: 1px solid #e5e5e5;">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item title is-4" href="index.html">
+          ALIF الف Project
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="subPageNavbar">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="subPageNavbar" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="index.html">Home</a>
+          <a class="navbar-item" href="data.html">Data</a>
+          <a class="navbar-item" href="tokenizer.html">Tokenizer</a>
+          <a class="navbar-item" href="models.html">Models</a>
+          <a class="navbar-item" href="instruct_tuning.html">Instruct Tuning</a>
+          <a class="navbar-item" href="evaluation.html">Evaluation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Instruct Tuning Section Content -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h1 class="title is-2 has-text-centered">Instruction Tuning for Urdu</h1>
+          <p class="subtitle is-5 has-text-centered">Enabling ALIF Models to Understand and Follow Commands</p>
+          <hr>
+          <div class="content has-text-justified" style="margin-top: 30px;">
+            <p>
+              While pretrained language models excel at predicting the next token and generating coherent text, they often require specific prompting or fine-tuning to perform desired tasks or follow instructions effectively. Instruction tuning is a crucial step to align these models with human intent, making them more helpful and controllable. We applied instruction tuning to our ALIF base model to create a model capable of responding to commands and engaging in helpful dialogue in Urdu.
+            </p>
+
+            <h3 class="title is-4" style="margin-top: 40px;">Instruction Datasets for Urdu</h3>
+            <p>
+                A key challenge for instruction tuning in low-resource languages like Urdu is the availability of high-quality, diverse instruction datasets. We addressed this by curating and adapting a collection of datasets:
+            </p>
+            <ul>
+                <li>
+                    <strong>[Dataset 1 Name - e.g., UrduAlpaca]:</strong> 
+                    [Brief description, e.g., "A translated and culturally adapted version of the Stanford Alpaca dataset, containing ~50k instruction-response pairs covering a wide range of general tasks like brainstorming, open-ended QA, summarization, and creative writing, all in Urdu."] 
+                    (Size: [Number] examples)
+                </li>
+                <li>
+                    <strong>[Dataset 2 Name - e.g., UrduDolly]:</strong> 
+                    [Brief description, e.g., "A subset of the Databricks Dolly 15k dataset, filtered for relevance and translated to Urdu, focusing on more complex reasoning and instruction following."] 
+                    (Size: [Number] examples)
+                </li>
+                <!-- Add more datasets as needed -->
+            </ul>
+            <p style="margin-top:15px;">
+                These datasets were combined to create a comprehensive instruction tuning mixture totaling approximately <strong>[Total Number] examples</strong>. Care was taken to clean and format the data consistently.
+                <!-- TODO: Mention if you plan to release these instruct datasets -->
+            </p>
+
+            <h3 class="title is-4" style="margin-top: 40px;">Instruction Tuning Methodology</h3>
+            <p>
+                Our ALIF base model (e.g., 1B model or 100M model) were fine-tuned using the combined instruction dataset. The process involved:
+            </p>
+            <!-- Change the below methodology as needed and add or subtract more -->
+            <ul>
+                <li><strong>Framework:</strong> </li>
+                <li><strong>Objective:</strong> </li>
+                <li><strong>Loss Masking:</strong> </li>
+                <li><strong>Hyperparameters:</strong>
+                    <ul>
+                        <li>paramssssesssss</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4 class="title is-5" style="margin-top: 30px;">Prompt Format</h4>
+            <p>A consistent prompt format is crucial for instruction tuning. We adopted the following structure for our training data:</p>
+            <pre style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word;"><code>### Instruction:
+[ یہاں صارف کی ہدایات اردو میں درج کریں ]
+[User's instruction in Urdu (or English if part of the dataset)]
+
+### Input: (اختیاری)
+[ یہاں اضافی سیاق و سباق یا ماڈل کے لیے ان پٹ فراہم کریں، اگر کوئی ہو ]
+[Additional context or input for the model, if any (Optional)]
+
+### Response:
+[ ماڈل کا مطلوبہ جواب اردو میں ]
+[Model's desired output in Urdu]</code></pre>
+            <p>
+                This format clearly delineates the instruction, any supplementary input, and the expected response, guiding the model during the fine-tuning process.
+            </p>
+            <p style="margin-top: 20px;">
+                The resulting instruction-tuned models are designed to be more adept at interactive tasks and following user directives in Urdu. Their performance is further detailed on the <a href="evaluation.html">Evaluation page</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              ALIF الف Project - Habib University. Page template adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> and <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+            </p>
+            <p>
+             Licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach( el => {
+          el.addEventListener('click', () => {
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
