@@ -68,33 +68,21 @@
             </p>
 
             <h3 class="title is-4" style="margin-top: 40px;">Our Custom Tokenizers</h3>
-            <p>We focused on two primary tokenizers designed to balance Urdu-specific needs and potential bilingual applications:</p>
+            <p>Before training the tokenizers, we observed that the GPT tokenizer gave the best tokenizations (manual testing on the vercel tiktoken application), thus, we studied the GPT tokenizer files, and found out that they used a regex based split pattern before tokenization. What this does is basially split the text into different parts pre-tokenization, based on a set of regex rules, which improves the tokenization. Thus, we studied and modified the GPT regex split pattern to include Urdu characters, numbers, and letters, thus, making it more suitable for Urdu. We used this modified split pattern to trian our tokenizers.</p>
 
             <div class="box" style="margin-top: 20px;">
                 <h4 class="title is-5">1. Urdu Native Tokenizer (ALIF-Urdu-32k)</h4>
                 <ul>
-                    <li><strong>Algorithm:</strong> <!-- ADD STUFF HERE AND NEECHAY -->></li>
-                    <li><strong>Training Data:</strong> </li>
-                    <li><strong>Vocabulary Size:</strong></li>
-                    <li><strong>Methodology:</strong> <!-- [Briefly describe training process, e.g., "Trained using the Hugging Face `tokenizers` library with parameters optimized for Urdu script, including pre-tokenization rules for Urdu characters and numerals." Mention any special handling for ligatures or specific Urdu characters.] -->></li>
-                    <li><strong>Key Characteristics:</strong><!--  Optimized for pure Urdu text, aiming for efficient representation and good handling of common Urdu morphological variations. Designed to minimize out-of-vocabulary tokens for native Urdu content. -->></li>
+                    <li><strong>Algorithm:</strong> Byte Pair Encoding Algorithm</li>
+                    <li><strong>Training Data:</strong> 33GB raw urdu text</li>
+                    <li><strong>Vocabulary Size:</strong>32000 vocabulary size</li>
+                    <li><strong>Methodology:</strong> We first developed our own tokenizer class, and also experimented with the SentencePiece tokenizer library for our tokenziers as the library also inherently uses the Byte Pair Encoding algorithm. The library had a better optimized training code with respect to memory usage, and training time, hence we continued using the SentencePiece library, modified with our GPT-based regex split pattern, and our dataset. <!-- [Briefly describe training process, e.g., "Trained using the Hugging Face `tokenizers` library with parameters optimized for Urdu script, including pre-tokenization rules for Urdu characters and numerals." Mention any special handling for ligatures or specific Urdu characters.] -->></li>
+                    <li><strong>Key Characteristics:</strong> Optimized for pure Urdu text, aiming for efficient representation and good handling of common Urdu morphological variations. Designed to minimize out-of-vocabulary tokens for native Urdu content.</li>
                 </ul>
             </div>
 
-            <div class="box" style="margin-top: 20px;">
-                <h4 class="title is-5">2. Urdu-English Bilingual Tokenizer (ALIF-UrEn-64k) (Optional)</h4>
-                 <!-- TODO: Include this section if you developed a bilingual tokenizer -->
-                <p class="is-italic">[Remove or complete this section if applicable]</p>
-                <ul>
-                    <li><strong>Algorithm:</strong> </li>
-                    <li><strong>Training Data:</strong> </li>
-                    <li><strong>Vocabulary Size:</strong> </li>
-                    <li><strong>Methodology:</strong> </li>
-                    <li><strong>Key Characteristics:</strong><!--  Aims to handle both Urdu and English text effectively, suitable for scenarios involving code-mixing or if the models are intended for bilingual inputs/outputs. -->></li>
-                </ul>
-            </div>
 
-            <h3 class="title is-4" style="margin-top: 40px;">Tokenizer Evaluation & Comparison</h3>
+            <h3 class="title is-4" style="margin-top: 40px;">Tokenizer Evaluation & Comparison (Regex based, SentencePiece, and GPT Split Pattern)</h3>
             <p>
               We rigorously evaluated our custom tokenizers in two stages, first, against each other to determine the best-performing tokenizer for Urdu, and second, against existing tokenizer - mainly GPT4's o200k_base tokenizer as that provided the best tokenizations as per testing on the tiktoken.vercel app:
             </p>
@@ -104,29 +92,81 @@
                 <li><strong>Tokenization Speed:</strong> The time taken to tokenize a standard corpus.</li>
             </ul>
 
-            <p style="margin-top: 15px;">
-                Yahan kuch daalna hai
-                <!-- Our ALIF-Urdu-32k tokenizer demonstrated [e.g., approximately X% fewer tokens per document on average compared to Llama's tokenizer on our Urdu test set, while maintaining competitive tokenization speed]. We also found that [e.g., our 32k vocabulary offered a good trade-off between compression and vocabulary size compared to our experimental 10k and 20k versions]. -->
-            </p>
-
             <!-- Placeholder for Tokenizer Comparison Graphs -->
             <div class="columns is-centered" style="margin-top: 30px;">
                  <div class="column is-half has-text-centered">
                      <figure class="image is-inline-block">
-                        <img src="[Image: Path to fertility comparison graph for 32k vs others]" alt="Tokenizer Fertility Comparison (ALIF-Urdu-32k)" style="border: 1px solid #ccc;">
-                        <figcaption class="is-size-7">[Caption: Average Tokens per Document: ALIF-Urdu-32k vs. Baselines]</figcaption>
+                        <img src="static/images/tokenizer/og_Fertility.png" alt="Tokenizer Fertility Comparison" style="border: 1px solid #ccc;">
+                        <figcaption class="is-size-7">[Average Tokens per Document]</figcaption>
                      </figure>
                  </div>
                  <div class="column is-half has-text-centered">
                     <figure class="image is-inline-block">
-                        <img src="[Image: Path to speed comparison graph or another relevant metric]" alt="Tokenizer Performance Metric" style="border: 1px solid #ccc;">
-                        <figcaption class="is-size-7">[Caption: Tokenization Speed (or other metric) Comparison]</figcaption>
+                        <img src="static/images/tokenizer/og_speed.png" alt="Tokenizer Performance Metric" style="border: 1px solid #ccc;">
+                        <figcaption class="is-size-7">[Tokenization Speed Comparison]</figcaption>
                     </figure>
                  </div>
             </div>
-            <p class="has-text-justified" style="margin-top: 15px;">
+
+
+            <p style="margin-top: 15px;">
+              <!-- Yahan kuch daalna hai -->
+              Amongst the evaluations we did within our Urdu tokenizers, we found that the SentencePiece tokenizer coupled with the modified GPT-based regex split pattern outperformed our regex based tokenizer, and the original GPT split pattern. Thus we used the SentencePiece tokenizer to train multiple tokenizers of varying vocabulary sizes, and evaluated them on our Urdu test set. The results showed that the tokenizer with 32000 vocabulary size was better performing. We also evaluated the tokenizers against GPT4's o200k_base tokenizer, and found that our tokenizer was better performing in terms of average tokens counts for varying sentence sizes.   
+              <!-- Our ALIF-Urdu-32k tokenizer demonstrated [e.g., approximately X% fewer tokens per document on average compared to Llama's tokenizer on our Urdu test set, while maintaining competitive tokenization speed]. We also found that [e.g., our 32k vocabulary offered a good trade-off between compression and vocabulary size compared to our experimental 10k and 20k versions]. -->
+          </p>
+
+          <h3 class="title is-4" style="margin-top: 40px;">Tokenizer Evaluation & Comparison (SentencePiece and Modified GPT Split Pattern)</h3>
+          <div class="columns is-centered" style="margin-top: 30px;">
+            <div class="column is-half has-text-centered">
+                <figure class="image is-inline-block">
+                    <img src="static/images/tokenizer/sp_urdu_fertility_comparison.png" alt="Tokenizer Fertility Comparison" style="border: 1px solid #ccc;">
+                    <figcaption class="is-size-7">[Fertility: Average Tokens per Document]</figcaption>
+                </figure>
+            </div>
+            <div class="column is-half has-text-centered">
+                <figure class="image is-inline-block">
+                    <img src="static/images/tokenizer/sp_urdu_speed_comparison.png" alt="Tokenizer Speed Comparison" style="border: 1px solid #ccc;">
+                    <figcaption class="is-size-7">[Tokenization Speed Comparison]</figcaption>
+                </figure>
+            </div>
+          </div>
+
+          <h3 class="title is-4" style="margin-top: 40px;">ALIF Tokenizers & GPT4's o200k_base Tokenizer (Average Token counts)</h3>
+          <div class="columns is-centered" style="margin-top: 30px;">
+            <div class="column is-half has-text-centered">
+                <figure class="image is-inline-block">
+                    <img src="static/images/tokenizer/average_token_counts_bar_plot.png" alt="Tokenizer Fertility Comparison" style="border: 1px solid #ccc;">
+                    <!-- <figcaption class="is-size-7">[Fertility: Average Tokens per Document]</figcaption> -->
+                     <!-- Add a figcaption below -->
+                    <figcaption class="is-size-7">[Average Tokens per Document]</figcaption>
+                </figure>
+            </div>
+            <div class="column is-half has-text-centered">
+                <figure class="image is-inline-block">
+                    <img src="static/images/tokenizer/average_token_counts_plot.png" alt="Tokenizer Speed Comparison" style="border: 1px solid #ccc;">
+                    <!-- <figcaption class="is-size-7">[Tokenization Speed Comparison]</figcaption> -->
+                    <figcaption class="is-size-7">[Average Tokens per Document - general trend]</figcaption>
+                </figure>
+            </div>
+          </div>
+          
+          
+
+        
+          <div class="box" style="margin-top: 20px;">
+              <h4 class="title is-5">2. Urdu-English Bilingual Tokenizer (ALIF-UrEn-80k)</h4>
+              <ul>
+                  <li><strong>Algorithm:</strong> Byte Pair Encoding Algorithm </li>
+                  <li><strong>Training Data:</strong> 66GB (33GB raw urdu text + 33GB of fineweb data)</li>
+                  <li><strong>Vocabulary Size:</strong> 80000 vocabulary size</li>
+                  <li><strong>Methodology:</strong> We also experimented with a bilingual tokenizer (with hopes of a bilingual model in the future), trained using the SentencePiece library, our 33GB Urdu Dataset, and 33GB of Fineweb English data.</li>
+                  <li><strong>Key Characteristics:</strong> Aims to handle both Urdu and English text effectively, suitable for scenarios involving language-mixing.</li>
+              </ul>
+          </div>
+
+            <!-- <p class="has-text-justified" style="margin-top: 15px;">
                 [If applicable, add details about the Ur-En tokenizer comparison, e.g., "The ALIF-UrEn tokenizer(s) showed comparable performance to tokenizers like o200k_base on bilingual text, with slightly better Urdu tokenization."].
-            </p>
+            </p> -->
 
             <h3 class="title is-4" style="margin-top: 40px;">Try Our Tokenizer!</h3>
             <p>
@@ -134,7 +174,7 @@
             </p>
             <div class="has-text-centered" style="margin-top: 30px; margin-bottom: 30px;">
                 <!-- Option 1: Link to a Hugging Face Space or similar -->
-                 <a href="[Link: Live Tokenizer Demo on Hugging Face Spaces or similar]" target="_blank" class="button is-primary is-large is-rounded">
+                 <a href="https://0e2a-110-93-199-66.ngrok-free.app/" target="_blank" class="button is-primary is-large is-rounded">
                     <span class="icon"><i class="fas fa-magic"></i></span>
                     <span>Test ALIF Tokenizer Online</span>
                 </a>
