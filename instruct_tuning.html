@@ -72,39 +72,58 @@
                 A key challenge for instruction tuning in low-resource languages like Urdu is the availability of high-quality, diverse instruction datasets. We addressed this by curating and adapting a collection of datasets:
             </p>
             <ul>
-                <li>
-                    <strong>[Dataset 1 Name - e.g., UrduAlpaca]:</strong> 
-                    [Brief description, e.g., "A translated and culturally adapted version of the Stanford Alpaca dataset, containing ~50k instruction-response pairs covering a wide range of general tasks like brainstorming, open-ended QA, summarization, and creative writing, all in Urdu."] 
-                    (Size: [Number] examples)
-                </li>
-                <li>
-                    <strong>[Dataset 2 Name - e.g., UrduDolly]:</strong> 
-                    [Brief description, e.g., "A subset of the Databricks Dolly 15k dataset, filtered for relevance and translated to Urdu, focusing on more complex reasoning and instruction following."] 
-                    (Size: [Number] examples)
-                </li>
-                <!-- Add more datasets as needed -->
+              <li>
+                <strong>UrduAlpaca:</strong>
+                A translated and culturally adapted version of the Stanford Alpaca dataset (~50k examples). This covers general tasks like brainstorming, open-ended QA, summarization, and creative writing. Translations were refined using GPT-4o-mini with Urdu fluency constraints to preserve instruction-following structure.
+              </li>
+              <li>
+                <strong>UrduDolly:</strong>
+                Derived from the Dolly-15k dataset, we selected high-quality examples requiring reasoning, converted them into Urdu, and filtered ambiguous or culturally mismatched items (~15k examples).
+              </li>
+              <li>
+                <strong>UrduStanford:</strong>
+                A direct Urdu translation of the original Stanford instruction dataset. While overlapping with UrduAlpaca in format, this version preserves exact instruction styles from the English version to benchmark alignment quality. (~85k examples).
+              </li>
+              <li>
+                <strong>UrduLiteraryQA:</strong>
+                A curated dataset (~10k examples) of Urdu literature, grammar, and poetry QnA pairs compiled by local educators and linguists. It includes nuanced literary interpretation and contextual analysis.
+              </li>
             </ul>
             <p style="margin-top:15px;">
-                These datasets were combined to create a comprehensive instruction tuning mixture totaling approximately <strong>[Total Number] examples</strong>. Care was taken to clean and format the data consistently.
-                <!-- TODO: Mention if you plan to release these instruct datasets -->
+              These datasets were cleaned, normalized, and combined into a single mixture of approximately <strong>62,500 instruction pairs</strong>. Translations preserved tag structures and alignment with the ALIF tokenizer to minimize semantic drift.
             </p>
-
             <h3 class="title is-4" style="margin-top: 40px;">Instruction Tuning Methodology</h3>
             <p>
-                Our ALIF base model (e.g., 1B model or 100M model) were fine-tuned using the combined instruction dataset. The process involved:
-            </p>
+              Our ALIF base model (1B variant) was fine-tuned using the combined instruction dataset.
+            </p>            
             <!-- Change the below methodology as needed and add or subtract more -->
             <ul>
-                <li><strong>Framework:</strong> </li>
-                <li><strong>Objective:</strong> </li>
-                <li><strong>Loss Masking:</strong> </li>
-                <li><strong>Hyperparameters:</strong>
-                    <ul>
-                        <li>paramssssesssss</li>
-                    </ul>
-                </li>
+              <li><strong>Framework:</strong> Fine-tuning was conducted using PyTorch + HuggingFace with Fully Sharded Data Parallel (FSDP) to efficiently handle larger batch sizes across multiple GPUs.</li>
+              <li><strong>Objective:</strong> Autoregressive causal language modeling (next-token prediction) on instruction-formatted Urdu text.</li>
+              <li><strong>Loss Masking:</strong> Target sequences were right-shifted copies of inputs. Padding tokens were masked by replacing them with <code>-100</code> to exclude them from loss calculation.</li>
+              <li><strong>Hyperparameters:</strong>
+                <ul>
+                  <li><strong>Model:</strong> ALIF-1B (pretrained Urdu model)</li>
+                  <li><strong>Batch Size:</strong> 1M tokens (via gradient accumulation)</li>
+                  <li><strong>Learning Rate:</strong> 2e-5</li>
+                  <li><strong>Precision:</strong> Full 32-bit FP</li>
+                  <li><strong>Hardware:</strong> 4x NVIDIA V100 on DGX-1 node</li>
+                  <li><strong>Training Epochs:</strong> Several passes until loss plateaued</li>
+                </ul>
+              </li>
             </ul>
-
+            <h4 class="title is-5" style="margin-top: 40px;">Tokenization and Target Preparation</h4>
+            <p>
+              Once prompt-response pairs were wrapped in the Urdu tag template, the following steps ensured the model could learn in a structured, instruction-following way:
+            </p>
+            <ol>
+              <li><strong>Prompt Formatting:</strong> Data was wrapped using <code>&lt;t1&gt;</code>, <code>&lt;t2&gt;</code>, <code>&lt;t3&gt;</code> tags to guide the model clearly.</li>
+              <li><strong>Tokenization:</strong> The wrapped strings were converted into token IDs using the ALIF tokenizer (based on LLaMA tokenizer with Urdu adaptations).</li>
+              <li><strong>Padding:</strong> Sequences were padded to the maximum length using the end-of-text token <code>50256</code>.</li>
+              <li><strong>Target Creation:</strong> The target sequence was the input sequence shifted one token right.</li>
+              <li><strong>Loss Masking:</strong> Padding tokens in targets were set to <code>-100</code> to ensure they were ignored during training loss computation.</li>
+            </ol>
+            <p>This preprocessing allowed the model to focus on meaningful parts of the sequence and learn to predict the next token in a realistic, instruction-following setup.</p>
             <h4 class="title is-5" style="margin-top: 30px;">Prompt Format</h4>
             <p>A consistent prompt format is crucial for instruction tuning. We adopted the following structure for our training data:</p>
             <pre style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word;"><code>### Instruction:
@@ -121,6 +140,237 @@
             <p>
                 This format clearly delineates the instruction, any supplementary input, and the expected response, guiding the model during the fine-tuning process.
             </p>
+            
+            <style>
+              /* General styling for container */
+              .container {
+                width: 100%;
+                margin: 20px auto;
+              }
+            
+              /* Styling for prompt format box */
+              .prompt-box {
+                background-color: #f5f5f5;
+                padding: 16px;
+                border-radius: 8px;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                margin-bottom: 30px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                font-family: 'Courier New', Courier, monospace;
+              }
+            
+              .prompt-box code {
+                font-size: 14px;
+                color: #333;
+              }
+            
+              /* Tabs styling */
+              .tabs {
+                display: flex;
+                justify-content: flex-start;
+                margin-bottom: 16px;
+                padding: 10px 0;
+                border-bottom: 2px solid #ddd;
+                background: #f9f9f9;
+                border-radius: 8px 8px 0 0;
+              }
+            
+              .tab {
+                padding: 12px 18px;
+                cursor: pointer;
+                background: #f0f0f0;
+                border-radius: 6px 6px 0 0;
+                margin-right: 12px;
+                font-weight: 600;
+                color: #444;
+                transition: all 0.3s ease;
+                text-align: center;
+              }
+            
+              .tab:hover {
+                background: #e0e0e0;
+              }
+            
+              .tab.active {
+                background: #ffffff;
+                border-bottom: 2px solid #5c6bc0;
+                box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+                color: #5c6bc0;
+              }
+            
+              /* Tab content styling */
+              .tab-content {
+                display: none;
+                background: #fafafa;
+                border: 1px solid #ddd;
+                border-radius: 0 0 8px 8px;
+                padding: 16px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+              }
+            
+              .tab-content.active {
+                display: block;
+              }
+            
+              /* Styling for examples */
+              .example {
+                margin-bottom: 16px;
+                padding: 16px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                background-color: #f9f9f9;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+              }
+            
+              .example-label {
+                font-weight: 700;
+                margin-bottom: 8px;
+                color: #333;
+              }
+            
+              /* Additional padding for better alignment */
+              .tabs, .tab-content {
+                padding-left: 20px;
+                padding-right: 20px;
+              }
+            
+            </style>
+            
+            <div class="container">
+              <!-- Prompt Format Box -->
+              <div class="prompt-box">
+                <code>
+                  &lt;t1&gt;ہدایات&lt;t2&gt;[Urdu Instruction]&lt;t3&gt;<br>
+                  &lt;t1&gt;صارف&lt;t2&gt;[Urdu Input]&lt;t3&gt;<br>
+                  &lt;t2&gt;معاون&lt;t1&gt;[Model Response]&lt;t3&gt;
+                </code>
+              </div>
+            
+            <!-- Tabs -->
+            <div class="tabs">
+              <div class="tab active" onclick="showTab('sentiment')">🧠 Sentiment</div>
+              <div class="tab" onclick="showTab('grammar')">✏️ Grammar</div>
+              <div class="tab" onclick="showTab('qa-context')">💬 QnA with Context</div>
+              <div class="tab" onclick="showTab('qa-no-context')">❓ QnA without Context</div>
+            </div>
+            
+            <div id="sentiment" class="tab-content active">
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                درج ذیل جملے کے جذبے (مثبت، منفی) کی درجہ بندی کریں۔
+                <div class="example-label">Urdu Input:</div>
+                یہ کتاب بہت بورنگ تھی، کہانی میں کوئی کشش نہیں تھی اور کردار بھی بے جان لگے۔ وقت کا ضیاع تھا۔
+                <div class="example-label">Expected Output:</div>
+                منفی
+              </div>
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                درج ذیل جملے کے جذبے (مثبت، منفی) کی درجہ بندی کریں۔
+                <div class="example-label">Urdu Input:</div>
+                یہ فلم بہترین اداکاری، شاندار ہدایت کاری اور ایک مضبوط کہانی کا مجموعہ ہے، دیکھ کر مزہ آگیا!
+                <div class="example-label">Expected Output:</div>
+                مثبت
+              </div>
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                درج ذیل جملے کے جذبے (مثبت، منفی) کی درجہ بندی کریں۔
+                <div class="example-label">Urdu Input:</div>
+                اس ریسٹورنٹ میں کھانا واقعی لاجواب تھا، ذائقہ اور معیار دونوں میں بہت اچھا لگا۔
+                <div class="example-label">Expected Output:</div>
+                مثبت
+              </div>
+            </div>
+            
+            <div id="grammar" class="tab-content">
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                جملے میں اگر کوئی املا یا گرامر کی غلطی ہو تو درست کریں۔
+                <div class="example-label">Urdu Input:</div>
+                میں وہ فلم دیکھا کل رات۔
+                <div class="example-label">Expected Output:</div>
+                میں نے وہ فلم کل رات دیکھی۔
+              </div>
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                جملے میں اگر کوئی املا یا گرامر کی غلطی ہو تو درست کریں۔
+                <div class="example-label">Urdu Input:</div>
+                میں نے ایک نئی جوڑا خریدا کپڑوں کا۔
+                <div class="example-label">Expected Output:</div>
+                میں نے کپڑوں کا ایک نیا جوڑا خریدا۔
+              </div>
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                جملے میں اگر کوئی املا یا گرامر کی غلطی ہو تو درست کریں۔
+                <div class="example-label">Urdu Input:</div>
+                اس کا نیا جوڑا مجھے پسند آیا بہت۔
+                <div class="example-label">Expected Output:</div>
+                مجھے اس کا نیا جوڑا بہت پسند آیا۔
+              </div>
+            </div>
+            
+            <div id="qa-context" class="tab-content">
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                متن پڑھ کر سوال کا جواب دیں۔
+                <div class="example-label">Urdu Input:</div>
+                متن: شاخیں شاخ  
+                سوال: واحد اور جمع لکھیں: شاخیں
+                <div class="example-label">Expected Output:</div>
+                "شاخیں" جمع ہے اور اس کا واحد "شاخ" ہے۔
+              </div>
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                متن پڑھ کر سوال کا جواب دیں۔
+                <div class="example-label">Urdu Input:</div>
+                متن: یہ شعر ہماری درسی کتاب کی نظم ”راہرو“ سے لیا گیا ہے۔ اس نظم کے شاعر کا نام جوش ملیح آبادی ہے۔  
+                سوال: نظم "سراغ راہرو" کے شاعر کا نام بتائیں۔
+                <div class="example-label">Expected Output:</div>
+                نظم "سراغ راہرو" کے شاعر کا نام جوش ملیح آبادی ہے۔
+              </div>
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                متن پڑھ کر سوال کا جواب دیں۔
+                <div class="example-label">Urdu Input:</div>
+                متن: جہاد عربی زبان کا لفظ ہے جو ”جہد“ سے ماخوذ ہے۔  
+                سوال: جہاد کی لغوی تعریف کیا ہے؟
+                <div class="example-label">Expected Output:</div>
+                "جہد" یعنی کوشش یا محنت ہے۔
+              </div>
+            </div>
+            
+            <div id="qa-no-context" class="tab-content">
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                زمین کا قدرتی سیارچہ کونسا ہے؟
+                <div class="example-label">Urdu Input:</div>
+                <div class="example-label">Expected Output:</div>
+                چاند
+              </div>
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                مشہور مصور ایم ایف حسین کس ملک سے تعلق رکھتے تھے؟
+                <div class="example-label">Urdu Input:</div>
+                <div class="example-label">Expected Output:</div>
+                بھارت
+              </div>
+              <div class="example">
+                <div class="example-label">Urdu Instruction:</div>
+                زمین سورج کے گرد ایک چکر کتنے دنوں میں مکمل کرتی ہے؟
+                <div class="example-label">Urdu Input:</div>
+                <div class="example-label">Expected Output:</div>
+                تقریباً ۳۶۵ دن
+              </div>
+            </div>            
+            
+            <script>
+              function showTab(id) {
+                document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+                document.getElementById(id).classList.add('active');
+                event.currentTarget.classList.add('active');
+              }
+            </script>
             <p style="margin-top: 20px;">
                 The resulting instruction-tuned models are designed to be more adept at interactive tasks and following user directives in Urdu. Their performance is further detailed on the <a href="evaluation.html">Evaluation page</a>.
             </p>
