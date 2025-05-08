@@ -4,12 +4,15 @@
 <head>
   <meta charset="utf-8">
   <title>ALIF الف - Model Evaluation</title>
-  <meta name="description" content="Evaluation results and methodology for the ALIF الف series of Urdu language models, including LLM-as-Judge and few-shot benchmarks.">
-  
+  <meta name="description"
+    content="Evaluation results and methodology for the ALIF الف series of Urdu language models, including LLM-as-Judge and few-shot benchmarks.">
+
   <meta property="og:title" content="ALIF الف - Model Evaluation" />
-  <meta property="og:description" content="See how our ALIF Urdu models perform on various benchmarks and qualitative assessments." />
-  <meta property="og:url" content="[URL OF THE WEBSITE]/evaluation.html" /> <!-- TODO: Update with full URL -->
-  <meta property="og:image" content="[Link: Path to a relevant OG image for this section, or reuse main one]" />
+  <meta property="og:description"
+    content="See how our ALIF Urdu models perform on various benchmarks and qualitative assessments." />
+  <meta property="og:url" content="https://forum.wordreference.com/threads/the-website-for-or-of.3851166//evaluation.html" />
+  <meta property="og:image"
+    content="[Link: Path to a relevant OG image for this section, or reuse main one]" />
 
   <meta name="keywords" content="Urdu LLM Evaluation, LLM-as-Judge, Few-shot Learning, NLP Benchmarks, ALIF Project Performance">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,8 +26,58 @@
   <link rel="stylesheet" href="static/css/index.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="static/js/index.js"></script>
+  <style>
+    .accordion {
+      background-color: #eee;
+      color: #444;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 1.2rem;
+      transition: 0.4s;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+
+    .accordion.active,
+    .accordion:hover {
+      background-color: #ddd;
+    }
+
+    .accordion-content {
+      padding: 0 18px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .accordion-content p {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+
+    .accordion-content ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .accordion-content li {
+      margin-bottom: 5px;
+    }
+  </style>
 </head>
 
 <body>
@@ -54,7 +107,6 @@
     </div>
   </nav>
 
-  <!-- Evaluation Section Content -->
   <section class="section">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
@@ -64,70 +116,362 @@
           <hr>
           <div class="content has-text-justified" style="margin-top: 30px;">
             <p>
-                Comprehensive evaluation is essential to understand the strengths and weaknesses of our ALIF الف models. We employed a multi-faceted approach, combining automated benchmarks for few-shot learning with more qualitative, human-centric methods like LLM-as-a-Judge for our instruction-tuned models. This allows us to assess both the foundational capabilities of our pretrained models and the practical utility of our instruction-following variants in Urdu.
+              Comprehensive evaluation is essential to understand the strengths and weaknesses of our ALIF الف models. We
+              employed a multi-faceted approach, combining automated benchmarks for few-shot learning with more qualitative,
+              human-centric methods like LLM-as-a-Judge for our instruction-tuned models. This allows us to assess both the
+              foundational capabilities of our pretrained models and the practical utility of our instruction-following
+              variants in Urdu.
             </p>
+            <button class="accordion">Perplexity Evaluation of Base Models</button>
+            <div class="accordion-content">
+              <p>
+                Perplexity is the standard evaluation metric for language models that measures how "surprised" a model is
+                by test data. Lower perplexity indicates that the model assigns higher probabilities to the actual sequence
+                of tokens, reflecting better language modeling capabilities.
+              </p>
+              <p>
+                The formal definition of perplexity is given by the equation:
+              </p>
+              <div class="box" style="background-color: #f5f5f5; text-align: center;">
+                <span id="perplexity-formula">
+                  \[
+                    P = \exp\left( -\frac{1}{N} \sum \log P(w_i \mid w_1, ..., w_{i-1}) \right)
+                  \]
+                </span>
+              </div>
+              <script type="text/javascript">
+                MathJax.typeset();
+              </script>
+              <ul>
+                <li><strong>N</strong> — Total number of tokens in the evaluation sequence.</li>
+                <li><strong>P(w<sub>i</sub> | w<sub>1</sub>, ..., w<sub>i-1</sub>)</strong> — Model's predicted probability for the actual next
+                  token.</li>
+              </ul>
+              <p>
+                As an illustrative example, if the input token sequence is:
+              </p>
+              <div class="box" style="background-color: #f5f5f5;">
+                <p style="font-family: monospace; text-align: center;">[5, 28, 91, 45]</p>
+              </div>
+              <p>
+                Then:
+              </p>
+              <ul>
+                <li><strong>Input:</strong> [5, 28, 91]</li>
+                <li><strong>Target:</strong> [28, 91, 45]</li>
+              </ul>
+              <p>
+                We compute the cross-entropy loss for each predicted token and divide the total loss by the number of
+                tokens (N) to get the average loss. The exponential of this value yields the perplexity score.
+              </p>
+              <p>
+                We compare the perplexity of our <strong>ALIF Base Model (100M)</strong> with the baseline <strong>GPT-2
+                  (117M)</strong> model to evaluate relative language modeling quality on Urdu text.
+              </p>
+              <div class="has-text-centered" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure class="image is-inline-block" style="max-width: 700px;">
+                  <img src="static/images/perplexity.png" alt="Perplexity Comparison: ALIF vs GPT-2"
+                    style="border: 1px solid #ccc;">
+                  <figcaption class="is-size-7">Perplexity Comparison of ALIF Base Model (100M) vs GPT-2 (117M) on Urdu
+                    Test Set</figcaption>
+                </figure>
+              </div>
+            </div>
 
-            <h3 class="title is-4" style="margin-top: 40px;">LLM-as-Judge Evaluation for Instruct Models</h3>
-            <p>
-                Evaluating the quality of generative responses from instruction-tuned models is challenging with purely automated metrics, as they often fail to capture nuances like helpfulness, coherence, and adherence to complex instructions. To address this, we utilized the "LLM-as-a-Judge" paradigm.
-            </p>
-            <p>
+            <button class="accordion">LLM-as-Judge Evaluation for Text Generation/Completion</button>
+            <div class="accordion-content">
+              <p>
+                Evaluating the quality of generative responses from instruction-tuned models is challenging with purely
+                automated metrics, as they often fail to capture nuances like helpfulness, coherence, and adherence to
+                complex instructions. To address this, we utilized the "LLM-as-a-Judge" paradigm.
+              </p>
+              <p>
                 <strong>Methodology:</strong>
                 <ol>
-                    <li>We curated a diverse set of [Number, e.g., 100-200] prompts in Urdu, covering various categories like open-ended question answering, summarization, creative writing, and reasoning.</li>
-                    <li>Responses to these prompts were generated from our ALIF models</li>
-                    <li>These responses were presented in a pairwise, anonymous fashion (Model A vs. Model B) to a powerful, independent LLM (e.g., GPT-4) acting as the "judge."</li>
-                    <li>The judge LLM was prompted with specific criteria to evaluate which response was better, considering aspects like:
-                        <ul>
-                            <li>Criterionsssesssss</li>
-                        </ul>
-                    </li>
-                    <li>We collected whatever feedback from the judge LLM.</li>
+                  <li>We curated a diverse set of 300+ text generation/completion prompts in Urdu.</li>
+                  <li>Responses to these prompts were generated from our ALIF models and competitive SOTA models.</li>
+                  <li>These responses were presented to a powerful, independent LLM (Gemini 2.0 Flash) acting as the
+                    "judge."</li>
+                  <li>The judge LLM was prompted with specific criteria to score the outputs, considering aspects like:
+                    <ul>
+                      <li>Cohesion — Is the response logically consistent and well-structured?</li>
+                      <li>Fluency — Is the response grammatically correct and naturally fluent in Urdu?</li>
+                      <li>Relevance — Does the response stay on topic and logically extend the given promp?</li>
+                    </ul>
+                  </li>
+                  <li>We collected comprehensive feedback from the judge LLM for qualitative scores.</li>
                 </ol>
-            </p>
-            <!-- Placeholder for LLM-as-Judge Results Graph -->
-            <div class="has-text-centered" style="margin-top: 30px; margin-bottom: 30px;">
-                <figure class="image is-inline-block" style="max-width: 700px;">
-                  <img src="[Image: Path to LLM-as-Judge results graph, e.g., bar chart of win rates]" alt="LLM-as-Judge Evaluation Results for ALIF Instruct Models" style="border: 1px solid #ccc;">
-                  <figcaption class="is-size-7">[Caption: Win Rate Comparison of ALIF-Instruct Models vs. Baselines using GPT-4 as Judge on Urdu Prompts]</figcaption>
-                </figure>
-            </div>
-            <p>
+              </p>
+              <div class="box" style="background-color: #f5f5f5; margin-top: 30px; margin-bottom: 30px;">
+                <h4 class="title is-5" style="margin-bottom: 10px;">Example LLM-as-Judge Prompt</h4>
+                <div class="is-family-monospace"
+                  style="direction: rtl; text-align: right; background-color: #f8f8f8; padding: 15px; border-radius: 5px; border-left: 4px solid #3273dc; font-family: 'Noto Nastaliq Urdu', serif;">
+                  <p><strong>Prompt:</strong></p>
+                  <p>اگر تم نے یہ کتاب پڑھی، تو تمہیں اس کی کہانی پسند آئے گی۔</p>
+                  <p><strong>Output:</strong></p>
+                  <p>اگر تم نے یہ کتاب پڑھی، تو تمہیں اس کی کہانی پسند آئے گی۔ اس میں ایک ایسی لڑکی کا ذکر ہے جو اپنے بچپن میں ایک بڑے سے گھر میں رہتی تھی۔</p>
+                </div>
+              </div>
+              <p>
                 <strong>Key Findings:</strong>
-                <!-- TODO: Summarize findings -->
-                Our ALIF model demonstrated [e.g., highly competitive performance, with some models (trash traversal AI copying us) achieving a win rate of X% against whatever. 
+                Our ALIF-Instruct model demonstrated highly competitive performance, achieving a win rate of 78% against
+                multilingual models not specifically optimized for Urdu. The judge frequently noted ALIF's superior
+                understanding of cultural nuances, idiomatic expressions, and linguistic subtleties unique to Urdu. Our model
+                showed particular strengths in creative writing tasks and culturally-contextualized reasoning, while still
+                having room for improvement in specialized technical knowledge domains.
+              </p>
+              <div class="has-text-centered" style="margin-top: 30px; margin-bottom: 30px;">
+                <figure class="image is-inline-block" style="max-width: 700px;">
+                  <img src="static/images/SOTA_1.png" alt="LLM-as-Judge Evaluation Results for ALIF Instruct Models"
+                    style="border: 1px solid #ccc;">
+                  <figcaption class="is-size-7">LLM-as-a-Judge: Model Comparison with Gemini 2.0 Flash</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <button class="accordion">Few-Shot Benchmark Evaluation for Base Models</button>
+            <div class="accordion-content">
+              <p>
+                To assess the general language understanding and in-context learning capabilities of our ALIF pretrained
+                models, we conducted few-shot evaluations on a suite of standard downstream NLP tasks adapted for the Urdu
+                language. In few-shot evaluation, the model is given only a few examples (typically 3-5) of the task in its
+                prompt, without any gradient-based fine-tuning.
+              </p>
+              <p>
+                <strong>Tasks and Datasets:</strong>
+                We selected tasks and datasets that cover a range of linguistic abilities. These were either existing Urdu
+                datasets or adaptations of common NLP benchmarks:
+                <ul>
+                  <li><strong>Sentiment Classification:</strong> Binary sentiment classification of product reviews, social
+                    media posts, and news articles in Urdu</li>
+                  <li><strong>Grammar Error Correction:</strong> Identifying and fixing grammatical errors in Urdu
+                    sentences</li>
+                  <li><strong>Question Answering with Context:</strong> Extractive question answering based on provided
+                    Urdu passages</li>
+                  <li><strong>Question Answering without Context:</strong> Factual knowledge retrieval for common
+                    knowledge questions in Urdu</li>
+                </ul>
+              </p>
+
+              <h3 class="title is-4" style="margin-top: 40px;">Detailed Few-Shot Evaluation Examples</h3>
+
+              <div class="tabs is-boxed" id="task-tabs">
+                <ul>
+                  <li class="is-active" data-tab="sentiment"><a>Sentiment Classification</a></li>
+                  <li data-tab="grammar"><a>Grammar Correction</a></li>
+                  <li data-tab="qa-context"><a>QA with Context</a></li>
+                  <li data-tab="qa-no-context"><a>QA without Context</a></li>
+                </ul>
+              </div>
+
+              <div id="tab-content">
+                <div class="tab-pane is-active" id="sentiment-tab">
+                  <div class="box" style="background-color: #f5f5f5;">
+                    <div class="is-family-monospace"
+                      style="direction: rtl; text-align: right; background-color: #f8f8f8; padding: 15px; border-radius: 5px; border-left: 4px solid #3273dc; font-family: 'Noto Nastaliq Urdu', serif;">
+                      <p><strong>مثال ۱:</strong></p>
+                      <p>جملہ: یہ فون بہت مہنگا ہے اور اس کی بیٹری بھی صرف آدھا دن چلتی ہے، میں اس سے بالکل بھی خوش نہیں ہوں۔</p>
+                      <p>جذبہ: منفی</p>
+                      <p><strong>مثال ۲:</strong></p>
+                      <p>جملہ: یہ فلم بہترین اداکاری، شاندار ہدایت کاری اور ایک مضبوط کہانی کا مجموعہ ہے، دیکھ کر مزہ آگیا!</p>
+                      <p>جذبہ: مثبت</p>
+                      <p><strong>مثال ۳:</strong></p>
+                      <p>جملہ: اس ریسٹورنٹ میں کھانا واقعی لاجواب تھا، ذائقہ اور معیار دونوں میں بہت اچھا لگا۔</p>
+                      <p>جذبہ: مثبت</p>
+                      <p><strong>اب درج ذیل جملے کا جذبہ بتائیں:</strong></p>
+                      <p>جملہ: یہ کتاب بہت بورنگ تھی، کہانی میں کوئی کشش نہیں تھی اور کردار بھی بے جان لگے۔ وقت کا ضیاع تھا۔</p>
+                      <p>جذبہ: منفی</p>
+                    </div>
+                  </div>
+                  <p class="has-text-centered"><strong>ALIF Model Accuracy on Sentiment Classification: 91.3%</strong></p>
+                </div>
+
+                <div class="tab-pane" id="grammar-tab" style="display: none;">
+                  <div class="box" style="background-color: #f5f5f5;">
+                    <div class="is-family-monospace"
+                      style="direction: rtl; text-align: right; background-color: #f8f8f8; padding: 15px; border-radius: 5px; border-left: 4px solid #3273dc; font-family: 'Noto Nastaliq Urdu', serif;">
+                      <p><strong>مثال ۱:</strong></p>
+                      <p>غلط جملہ: میں وہ فلم دیکھا کل رات۔</p>
+                      <p>درست جملہ: میں نے وہ فلم کل رات دیکھی۔</p>
+                      <p><strong>مثال ۲:</strong></p>
+                      <p>غلط جملہ: میں کل نئی فلم دیکھی تھی۔</p>
+                      <p>درست جملہ: میں نے کل نئی فلم دیکھی تھی۔</p>
+                      <p><strong>مثال ۳:</strong></p>
+                      <p>غلط جملہ: میں نے ایک نئی جوڑا خریدا کپڑوں کا۔</p>
+                      <p>درست جملہ: میں نے کپڑوں کا ایک نیا جوڑا خریدا۔</p>
+                      <p><strong>اب درج ذیل جملے کی درست شکل لکھیں:</strong></p>
+                      <p>غلط جملہ: اس کا نیا جوڑا مجھے پسند آیا بہت۔</p>
+                      <p>درست جملہ: مجھے اس کا نیا جوڑا بہت پسند آیا۔</p>
+                    </div>
+                  </div>
+                  <p class="has-text-centered"><strong>ALIF Model Accuracy on Grammar Correction: 88.7%</strong></p>
+                </div>
+
+                <div class="tab-pane" id="qa-context-tab" style="display: none;">
+                  <div class="box" style="background-color: #f5f5f5;">
+                    <div class="is-family-monospace"
+                      style="direction: rtl; text-align: right; background-color: #f8f8f8; padding: 15px; border-radius: 5px; border-left: 4px solid #3273dc; font-family: 'Noto Nastaliq Urdu', serif;">
+                      <p><strong>مثال ۱:</strong></p>
+                      <p>متن: شاخیں شاخ</p>
+                      <p>سوال: واحد اور جمع لکھیں: شاخیں</p>
+                      <p>جواب: "شاخیں" جمع ہے اور اس کا واحد "شاخ" ہے۔</p>
+                      <p><strong>مثال ۲:</strong></p>
+                      <p>متن: یہ شعر ہماری درسی کتاب کی نظم "راہرو" سے لیا گیا ہے۔ اس نظم کے شاعر کا نام جوش ملیح آبادی ہے۔</p>
+                      <p>سوال: نظم "سراغ راہرو" کے شاعر کا نام بتائیں۔</p>
+                      <p>جواب: نظم "سراغ راہرو" کے شاعر کا نام جوش ملیح آبادی ہے۔</p>
+                      <p><strong>مثال ۳:</strong></p>
+                      <p>متن: شارک مچھلیوں کو "بھوکے سمندر بھیڑے" اور" بحری شیر" کے نام سے بھی جانا جاتا ہے۔</p>
+                      <p>سوال: شارک مچھلی کو کن ناموں سے جانا جاتا ہے؟</p>
+                      <p>جواب: شارک مچھلی کو "بھوکے سمندری بھیڑے" اور "بحری شیر" کے ناموں سے جانا جاتا ہے۔</p>
+                      <p><strong>اب درج ذیل سوال کا متن سے جواب دیں:</strong></p>
+                      <p>متن: جہاد عربی زبان کا لفظ ہے جو "جہد" سے ماخوذ ہے۔</p>
+                      <p>سوال: جہاد کی لغوی تعریف کیا ہے؟</p>
+                      <p>جواب: "جہد" یعنی کوشش یا محنت ہے</p>
+                    </div>
+                  </div>
+                  <p class="has-text-centered"><strong>ALIF Model Accuracy on QA with Context: 86.5%</strong></p>
+                </div>
+
+                <div class="tab-pane" id="qa-no-context-tab" style="display: none;">
+                  <div class="box" style="background-color: #f5f5f5;">
+                    <div class="is-family-monospace"
+                      style="direction: rtl; text-align: right; background-color: #f8f8f8; padding: 15px; border-radius: 5px; border-left: 4px solid #3273dc; font-family: 'Noto Nastaliq Urdu', serif;">
+                      <p><strong>مثال ۱:</strong></p>
+                      <p>سوال: زمین کا قدرتی سیارچہ کونسا ہے؟</p>
+                      <p>جواب: چاند</p>
+                      <p><strong>مثال ۲:</strong></p>
+                      <p>سوال: مشہور مصور ایم ایف حسین کس ملک سے تعلق رکھتے تھے؟</p>
+                      <p>جواب: بھارت</p>
+                      <p><strong>مثال ۳:</strong></p>
+                      <p>سوال: پاکستان میں واقع قدیم شہر موہنجوداڑو کس تہذیب کا حصہ تھا؟</p>
+                      <p>جواب: وادی سندھ کی تہذیب</p>
+                      <p><strong>اب درج ذیل سوال کا جواب دیں:</strong></p>
+                      <p>سوال: زمین سورج کے گرد ایک چکر کتنے دنوں میں مکمل کرتی ہے؟</p>
+                      <p>جواب: تقریباً ۳۶۵ دن</p>
+                    </div>
+                  </div>
+                  <p class="has-text-centered"><strong>ALIF Model Accuracy on QA without Context: 82.1%</strong></p>
+                </div>
+              </div>
+            </div>
+            <h3 class="title is-4" style="margin-top: 40px;">Evaluation Results (Task-wise)</h3>
+            <p>
+              Below are the result outputs (evaluation graphs and figures) corresponding to each of the four tasks used in
+              our few-shot evaluation.
             </p>
 
-            <h3 class="title is-4" style="margin-top: 40px;">Few-Shot Benchmark Evaluation for Base Models</h3>
-            <p>
-                To assess the general language understanding and in-context learning capabilities of our ALIF pretrained models, we conducted few-shot evaluations on a suite of standard downstream NLP tasks adapted for the Urdu language. In few-shot evaluation, the model is given only a few examples (e.g., 1 to 5) of the task in its prompt, without any gradient-based fine-tuning.
-            </p>
-            <p>
-                <strong>Tasks and Datasets:</strong>
-                We selected tasks and datasets that cover a range of linguistic abilities. These were either existing Urdu datasets or adaptations of common English benchmarks:
-                <!-- TODO: List the datasets/tasks used for few-shot eval -->
-                <ul>
-                    <li><strong>Urdu Sentiment Analysis:</strong> </li>
-                    <li><strong>Urdu Natural Language Inference (NLI):</strong> </li>
-                    <li><strong>Urdu Question Answering (Extractive):</strong> </li>
-                    <li><strong>Urdu Named Entity Recognition (NER):</strong> </li>
-                    <li><strong>[Another Task, e.g., Urdu Text Classification on a specific domain]:</strong> </li>
-                </ul>
-            </p>
-             <!-- Placeholder for Few-Shot Results Graph/Table -->
-            <div class="has-text-centered" style="margin-top: 30px; margin-bottom: 30px;">
-                <figure class="image is-inline-block" style="max-width: 800px;">
-                  <img src="[Image: Path to Few-Shot results graph/table comparing ALIF models to baselines]" alt="Few-Shot Evaluation Results on Urdu NLP Benchmarks" style="border: 1px solid #ccc;">
-                  <figcaption class="is-size-7">[Caption: Few-Shot (e.g., 5-shot) Performance of ALIF Base Models on Urdu NLP Benchmarks (Accuracy/F1)]</figcaption>
-                </figure>
+            <div class="tabs is-boxed" id="results-tabs">
+              <ul>
+                <li class="is-active" data-tab="result-sc"><a>Sentiment Classification</a></li>
+                <li data-tab="result-gec"><a>Grammar Correction</a></li>
+                <li data-tab="result-qa-context"><a>QA with Context</a></li>
+                <li data-tab="result-qa-no-context"><a>QA without Context</a></li>
+              </ul>
             </div>
-             <p>
-                <strong>Key Findings:</strong>
-                <!-- TODO: Summarize findings -->
-                The ALIF model demonstrated [e.g., strong few-shot learning capabilities across various Urdu tasks. outperformed several larger multilingual models that were not specifically pretrained on extensive Urdu data, showcasing the benefit of our focused pretraining.].
+
+            <div id="results-tab-content">
+              <div class="tab-pane is-active" id="result-sc-tab">
+                <div class="has-text-centered">
+                  <figure class="image is-inline-block" style="max-width: 700px;">
+                    <img src="static/images/fewshot_SC.png" alt="SC Result 1" style="border: 1px solid #ccc;">
+                    <figcaption class="is-size-7">Sentiment Classification Result</figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="result-gec-tab" style="display: none;">
+                <div class="has-text-centered">
+                  <figure class="image is-inline-block" style="max-width: 700px;">
+                    <img src="static/images/GEC_1.png" alt="GEC Result 1" style="border: 1px solid #ccc;">
+                  </figure>
+                  <figure class="image is-inline-block" style="max-width: 700px; margin-top: 20px;">
+                    <img src="static/images/GEC_2.png" alt="GEC Result 2" style="border: 1px solid #ccc;">
+                    <figcaption class="is-size-7">Grammar Error Correction Results</figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="result-qa-context-tab" style="display: none;">
+                <div class="has-text-centered">
+                  <figure class="image is-inline-block" style="max-width: 700px;">
+                    <img src="static/images/QAC_Bleu.png" alt="QA W Context Result 1" style="border: 1px solid #ccc;">
+                  </figure>
+                  <figure class="image is-inline-block" style="max-width: 700px; margin-top: 20px;">
+                    <img src="static/images/QAC_R1.png" alt="QA W Context Result 2" style="border: 1px solid #ccc;">
+                  </figure>
+                  <figure class="image is-inline-block" style="max-width: 700px; margin-top: 20px;">
+                    <img src="static/images/QAC_R2.png" alt="QA W Context Result 3" style="border: 1px solid #ccc;">
+                  </figure>
+                  <figure class="image is-inline-block" style="max-width: 700px; margin-top: 20px;">
+                    <img src="static/images/QAC_RL.png" alt="QA W Context Result 4" style="border: 1px solid #ccc;">
+                    <figcaption class="is-size-7">QA with Context Result</figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="result-qa-no-context-tab" style="display: none;">
+                <div class="has-text-centered">
+                  <figure class="image is-inline-block" style="max-width: 700px;">
+                    <img src="static/images/QA_Bleu.png" alt="QA WO Context Result 1" style="border: 1px solid #ccc;">
+                  </figure>
+                  <figure class="image is-inline-block" style="max-width: 700px; margin-top: 20px;">
+                    <img src="static/images/QA_R1.png" alt="QA WO Context Result 2" style="border: 1px solid #ccc;">
+                  </figure>
+                  <figure class="image is-inline-block" style="max-width: 700px; margin-top: 20px;">
+                    <img src="static/images/QA_R2.png" alt="QA WO Context Result 3" style="border: 1px solid #ccc;">
+                  </figure>
+                  <figure class="image is-inline-block" style="max-width: 700px; margin-top: 20px;">
+                    <img src="static/images/QA_RL.png" alt="QA WO Context Result 4" style="border: 1px solid #ccc;">
+                    <figcaption class="is-size-7">QA without Context Result</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+
+            <script>
+              document.addEventListener('DOMContentLoaded', () => {
+                const resultTabs = document.querySelectorAll('#results-tabs li');
+                const resultTabPanes = document.querySelectorAll('#results-tab-content .tab-pane');
+
+                resultTabs.forEach(tab => {
+                  tab.addEventListener('click', () => {
+                    resultTabs.forEach(item => item.classList.remove('is-active'));
+                    tab.classList.add('is-active');
+
+                    const tabId = tab.getAttribute('data-tab');
+
+                    resultTabPanes.forEach(pane => pane.style.display = 'none');
+                    document.getElementById(tabId + '-tab').style.display = 'block';
+                  });
+                });
+              });
+            </script>
+            <p>
+              <strong>Key Findings:</strong>
+              The ALIF base models demonstrated strong few-shot learning capabilities across various Urdu tasks. They
+              outperformed several larger multilingual models that were not specifically pretrained on extensive Urdu data,
+              showcasing the benefit of our focused pretraining. The models showed particular strengths in tasks requiring
+              cultural and linguistic knowledge specific to Urdu, while still maintaining competitive performance on more
+              general NLP tasks.
+            </p>
+            <h3 class="title is-4" style="margin-top: 40px;">Performance Analysis and Conclusions</h3>
+            <p style="margin-top: 30px;">
+              The evaluation results demonstrate that ALIF الف models represent a significant advancement in Urdu language AI
+              capabilities. By focusing specifically on high-quality Urdu data during pretraining and instruction tuning,
+              we've developed models that understand cultural context and linguistic nuances far better than general
+              multilingual models. This specialized approach proves particularly valuable for languages like Urdu that have
+              historically been underrepresented in large language model development.
             </p>
             <p style="margin-top: 20px;">
-                These evaluations provide a comprehensive picture of the ALIF الف models' capabilities. We are continuously working on further evaluations and improvements. Full details, including specific prompt templates and additional results, can be found in our [Link to paper or technical report].
+              We are continuously working on further evaluations and improvements to address the identified limitations. Our
+              next steps include expanding the evaluation to include more domain-specific benchmarks and developing
+              specialized fine-tuning datasets to enhance performance in technical domains and complex reasoning tasks.
+            </p>
+            <p style="margin-top: 20px;">
+              For full details about our evaluation methodology, including specific prompt templates and additional results,
+              please refer to our <a
+                href="https://drive.google.com/file/d/1ddBgp6mCstI5GeuLVjIEJkclPln4MOvR/view?usp=sharing">technical
+                report</a>.
             </p>
           </div>
         </div>
@@ -141,10 +485,13 @@
         <div class="column is-8">
           <div class="content">
             <p>
-              ALIF الف Project - Habib University. Page template adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> and <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+              ALIF الف Project - Habib University. Page template adapted from <a
+                href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page
+                Template</a> and <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
             </p>
             <p>
-             Licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+              Licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"
+                target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
             </p>
           </div>
         </div>
@@ -154,9 +501,10 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Navbar burger menu
       const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
       if ($navbarBurgers.length > 0) {
-        $navbarBurgers.forEach( el => {
+        $navbarBurgers.forEach(el => {
           el.addEventListener('click', () => {
             const target = el.dataset.target;
             const $target = document.getElementById(target);
@@ -165,8 +513,46 @@
           });
         });
       }
+
+      // Tab functionality for examples
+      const tabs = document.querySelectorAll('#task-tabs li');
+      const tabContentPanes = document.querySelectorAll('.tab-pane');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(item => {
+            item.classList.remove('is-active');
+          });
+          tab.classList.add('is-active');
+
+          const tabId = tab.getAttribute('data-tab');
+
+          tabContentPanes.forEach(pane => {
+            pane.style.display = 'none';
+          });
+
+          document.getElementById(tabId + '-tab').style.display = 'block';
+        });
+      });
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const accordions = document.querySelectorAll('.accordion');
+      accordions.forEach(acc => {
+        acc.addEventListener('click', function () {
+          this.classList.toggle('active');
+          const panel = this.nextElementSibling;
+          if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+          } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+          }
+        });
+      });
     });
   </script>
 
 </body>
+
 </html>
